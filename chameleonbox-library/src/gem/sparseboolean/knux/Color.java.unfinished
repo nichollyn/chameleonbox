@@ -1,0 +1,112 @@
+package gem.sparseboolean.knux;
+
+public class Color {
+    public static boolean isValidHex(String hex)
+    {
+      String allowed_chars = "0123456789abcdefABCDEF";
+
+      if (hex.isEmpty()) {
+        return false;
+      }
+
+      if (hex.charAt(0) == '#') {
+        hex = hex.substring(1, hex.length() - 1);
+      }
+
+      switch (hex.length()) {
+        case 3: // #rgb
+        case 4: // #rgba
+        case 6: // #rrggbb
+        case 8: // #rrggbbaa
+            for (int i = 0; i < hex.length(); i++) {
+                if (!allowed_chars.contains(String.valueOf(hex.charAt(i)))) {
+                    return false;
+                }
+            }
+          return true;
+        default:
+          return false;
+      }
+    }
+    
+    public double getRedFromHex(String hex) {
+        if (hex.charAt(0) == '#') {
+            hex = hex.substring(1, hex.length() -1);
+        }
+
+          a = 1.0f;
+
+          if (hex.length() == 3 || hex.length() == 4)
+          {
+            r = HexToInt(hex.substr(0, 1) + hex.substr(0, 1)) / 255.0f;
+            g = HexToInt(hex.substr(1, 1) + hex.substr(1, 1)) / 255.0f;
+            b = HexToInt(hex.substr(2, 1) + hex.substr(2, 1)) / 255.0f;
+
+            if (hex.length() == 4)
+              a = HexToInt(hex.substr(3, 1) + hex.substr(3, 1)) / 255.0f;
+          }
+          else if (hex.length() == 6 || hex.length() == 8)
+          {
+            r = HexToInt(hex.substr(0, 2)) / 255.0f;
+            g = HexToInt(hex.substr(2, 2)) / 255.0f;
+            b = HexToInt(hex.substr(4, 2)) / 255.0f;
+
+            if (hex.length() == 8)
+              a = HexToInt(hex.substr(6, 2)) / 255.0f;
+          }
+    }
+    
+    // DirectX D3DFormat
+    //
+    // All formats are listed from left to right, most significant bit (MSB) to
+    // least significant bit (LSB). For example, D3DFORMAT_ARGB is ordered from
+    // the MSB channel A (alpha), to the LSB channel B (blue). When traversing
+    // surface data, the data is stored in memory from LSB to MSB, which means
+    // that the channel order in memory is from LSB (blue) to MSB (alpha).
+    //
+    // The default value for formats that contain undefined channels (G16R16,
+    // A8, and so on) is 1. The only exception is the A8 format, which is
+    // initialized to 000 for the three color channels.
+    //
+    // The order of the bits is from the most significant byte first, so
+    // D3DFMT_A8L8 indicates that the high byte of this 2-byte format is
+    // alpha. D3DFMT_D16 indicates a 16-bit integer value and an
+    // application-lockable surface.
+    //
+    // Pixel formats have been chosen to enable the expression of
+    // hardware-vendor-defined extension formats, as well as to include the
+    // well-established four-character code (FOURCC) method. The set of formats
+    // understood by the Microsoft Direct3D runtime is defined by D3DFORMAT.
+
+    //Format of RGBA colors is
+    //7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //|    alpha        |      red    |     green      |     blue     |
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //MSB 31                                                             0 LSB
+
+
+    //Format of RGB colors is
+    //7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //|   ignored     |      red      |     green     |     blue      |
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+    //Format of BGR colors is
+    //7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //|   ignored     |      blue     |     green     |      red      |
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+    //Format of RGBA colors is
+    //7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //|      red      |      green    |     blue      |     alpha     |
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+    //Format of BGRA colors is
+    //7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //|      blue      |      green    |     red      |     alpha     |
+    //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+}
